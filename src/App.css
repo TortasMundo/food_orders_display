@@ -1,17 +1,30 @@
 .App {
   text-align: center;
+  animation: gradient 60s infinite alternate;
+  background: linear-gradient(45deg, #BA2C1C, #FBBF15, #5AA55D, #58C2EB, #786099);
+  background-size: 500% 500%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999999999;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  height: 90px;
+  position: absolute;
+  top: 1%;
+  left: 50%;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
+  /*background-color: #FFFFFF;*/
+  height: 100px;
   padding: 20px;
-  color: white;
+  color: black;
 }
 
 .App-title {
@@ -22,7 +35,15 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes gradient {
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
 }
+
