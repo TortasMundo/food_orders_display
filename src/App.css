@@ -1,7 +1,13 @@
 .App {
-  text-align: center;
   animation: gradient 60s infinite alternate;
-  background: linear-gradient(45deg, #BA2C1C, #FBBF15, #5AA55D, #58C2EB, #786099);
+  background: linear-gradient(
+    45deg,
+    #ba2c1c,
+    #fb7100,
+    #0f6464,
+    #1519eb,
+    #786099
+  );
   background-size: 500% 500%;
   position: fixed;
   top: 0;
@@ -11,28 +17,16 @@
   width: 100vw;
   height: 100vh;
   z-index: 999999999999;
+  color: white;
+  font-size: 6em;
 }
 
-.App-logo {
-  height: 90px;
-  position: absolute;
-  top: 1%;
-  left: 50%;
+.OrderNo {
+  text-align: center;
 }
 
-.App-header {
-  /*background-color: #FFFFFF;*/
-  height: 100px;
-  padding: 20px;
-  color: black;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
+.OrderDetails {
+  text-align: left;
 }
 
 @keyframes gradient {
@@ -46,4 +40,3 @@
     background-position: 0% 100%;
   }
 }
-
