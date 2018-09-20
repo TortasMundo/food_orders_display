@@ -27,12 +27,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="OrderNo">#{this.state.orders[0].id}</div>
+        <div className="OrderNo">#{this.state.orders[this.state.orders.length - 1].id}</div>
         <div OrderDetails>
-          Jamón (${this.state.orders[0].jamonQuantity}) <br />
-          Lomo (${this.state.orders[0].lomoQuantity}) <br />
-          Especial (${this.state.orders[0].especialQuantity}) <br />
-          Refrescos (${this.state.orders[0].refrescosQuantity}) <br />
+          Jamón (${this.state.orders[this.state.orders.length - 1].jamonQuantity}) <br />
+          Lomo (${this.state.orders[this.state.orders.length - 1].lomoQuantity}) <br />
+          Especial (${this.state.orders[this.state.orders.length - 1].especialQuantity}) <br />
+          Refrescos (${this.state.orders[this.state.orders.length - 1].refrescosQuantity}) <br />
         </div>
       </div>
     )
