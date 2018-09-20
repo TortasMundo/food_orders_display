@@ -1,5 +1,5 @@
 module.exports = {
-  API_HOST: 'https://tortasmundo-kitchen-api.herokuapp.com',
+  API_HOST: process.env.KITCHEN_API_URL || 'http://localhost:4000',
   get API_URL() {
     return `${this.API_HOST}`
   },
