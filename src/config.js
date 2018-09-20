@@ -1,7 +1,7 @@
 module.exports = {
   API_HOST: 'https://tortasmundo-kitchen-api.herokuapp.com',
   get API_URL() {
-    return `${this.API_HOST}/api`
+    return `${this.API_HOST}`
   },
   mocks: {
     delivererLocation: {

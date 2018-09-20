@@ -14,11 +14,8 @@ export async function send(request) {
   try {
     return await axios(info)
   } catch (err) {
+    debugger
     console.log(request.uri + '/' + request.path, info)
     console.log(err)
   }
-}
-
-module.exports = {
-  send
 }

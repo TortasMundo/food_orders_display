@@ -6,7 +6,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      orders: [],
+      orders: [{
+        id: 0,
+        jamonQuantity: 0,
+        lomoQuantity: 0,
+        especialQuantity: 0,
+        refrescosQuantity: 0,
+      }],
       currentOrderId: 0
     }
   }
@@ -21,12 +27,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="OrderNo">#23</div>
+        <div className="OrderNo">#{this.state.orders[0].id}</div>
         <div OrderDetails>
-          Jamón (${this.orders[0].jamonQuantity}) <br />
-          Lomo (${this.orders[0].lomoQuantity}) <br />
-          Especial (${this.orders[0].especialQuantity}) <br />
-          Refrescos (${this.orders[0].refrescosQuantity}) <br />
+          Jamón (${this.state.orders[0].jamonQuantity}) <br />
+          Lomo (${this.state.orders[0].lomoQuantity}) <br />
+          Especial (${this.state.orders[0].especialQuantity}) <br />
+          Refrescos (${this.state.orders[0].refrescosQuantity}) <br />
         </div>
       </div>
     )
