@@ -1,37 +1,44 @@
-html {
-    height: 100%;
+.App {
+  animation: gradient 60s infinite alternate;
+  background: linear-gradient(
+    45deg,
+    #ba2c1c,
+    #fb7100,
+    #0f6464,
+    #1519eb,
+    #786099
+  );
+  background-size: 500% 500%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999999999;
+  color: white;
+  font-size: 10em;
 }
 
-body {
-    background: #000;
-    text-align: center;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.OrderNo {
+  text-align: center;
 }
 
-div {
-    font-size: 9vw;
+.OrderDetails {
+  text-align: left;
+  padding-top: 0.4em;
+  padding-left: 0.5em;
 }
 
-.linear-wipe {
-    text-align: center;
-
-    background: linear-gradient(to right, #dbdb0f 20%, #cbc9c4 40%, #bfb40f 60%, #dedede 80%);
-    background-size: 200% auto;
-
-    color: #0000;
-    background-clip: text;
-    text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    animation: shine 2s linear infinite;
-}
-
-@keyframes shine {
-    to {
-        background-position: 200% center;
-    }
+@keyframes gradient {
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
 }

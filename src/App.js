@@ -26,9 +26,9 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <div className="OrderNo" className="linear-wipe" >#{this.state.orders[this.state.orders.length - 1].id}</div>
-        <div className="OrderDetails" className="linear-wipe">
+      <div className="App">
+        <div className="OrderNo">#{this.state.orders[this.state.orders.length - 1].id}</div>
+        <div className="OrderDetails">
           * Jamón - {this.state.orders[this.state.orders.length - 1].jamonQuantity} <br />
           * Lomo - {this.state.orders[this.state.orders.length - 1].lomoQuantity} <br />
           * Especial - {this.state.orders[this.state.orders.length - 1].especialQuantity} <br />
