@@ -1,13 +1,6 @@
 .App {
   animation: gradient 60s infinite alternate;
-  background: linear-gradient(
-    45deg,
-    #ba2c1c,
-    #fb7100,
-    #0f6464,
-    #1519eb,
-    #786099
-  );
+  background: black;
   background-size: 500% 500%;
   position: fixed;
   top: 0;
@@ -29,16 +22,4 @@
   text-align: left;
   padding-top: 0.4em;
   padding-left: 0.5em;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 100%;
-  }
-  50% {
-    background-position: 100% 0%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
 }
