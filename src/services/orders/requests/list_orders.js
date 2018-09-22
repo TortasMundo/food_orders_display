@@ -12,7 +12,7 @@ class Request {
     class Builder {
       constructor() {}
       build() {
-        return new Request(this)
+        return new Request()
       }
     }
     return Builder

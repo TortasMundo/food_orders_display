@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const response = await orderService.listOrders()
+    // const response = await orderService.listOrders()
     if (response.data && response.data.length) {
       this.setState({ orders: response.data })
     }
