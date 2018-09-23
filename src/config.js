@@ -1,7 +1,8 @@
 module.exports = {
-  API_HOST: process.env.KITCHEN_API_URL || 'http://localhost:4000',
   get API_URL() {
-    return `${this.API_HOST}`
+    debugger
+    return window.location.href === 'https://tortasmundo-orders-display.herokuapp.com/'
+      ? `https://tortasmundo-kitchen-api.herokuapp.com` : 'http://localhost:4000'
   },
   mocks: {
     delivererLocation: {
