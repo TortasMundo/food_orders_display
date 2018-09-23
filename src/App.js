@@ -25,9 +25,9 @@ class App extends Component {
   async componentDidMount() {
     this.socket = io(config.API_URL)
     this.socket.emit('subscribe_for_order_placements', config.mocks.store_location)
-    this.socket.on('placed_order', data => {
+    this.socket.on('placed_order', order => {
       this.setState({
-        orders: [...this.state.orders, data.order],
+        orders: [...this.state.orders, order],
       })
     })
 
