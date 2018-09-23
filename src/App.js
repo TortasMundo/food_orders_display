@@ -3,6 +3,7 @@ import './App.css'
 import config from './config'
 import * as orderService from './services/orders'
 import io from 'socket.io-client'
+import ReactSound from 'react-sound'
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends Component {
         },
       ],
       currentOrderId: 0,
+      ring: false
     }
     this.socket = {}
   }
@@ -26,6 +28,9 @@ class App extends Component {
     this.socket = io(config.API_URL)
     this.socket.emit('subscribe_for_order_placements', config.mocks.store_location)
     this.socket.on('placed_order', order => {
+      this.setState({
+        ring: true
+      })
       this.setState({
         orders: [...this.state.orders, order],
       })
@@ -58,6 +63,13 @@ class App extends Component {
   }
 
   render() {
+    let sound
+    if (this.state.ring) {
+      sound = <ReactSound
+        url="sound.mp3"
+        playStatus={ReactSound.status.PLAYING}
+      />
+    }
     return (
       <div className="App" onClick={this.previousOrder} onContextMenu={this.nextOrder}>
         <div className="OrderNo">#{this.state.orders[this.state.currentOrderId].id}</div>
@@ -67,6 +79,7 @@ class App extends Component {
           {this.state.orders[this.state.currentOrderId].especialQuantity} <br />* Refrescos -{' '}
           {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br />
         </div>
+        {sound}
       </div>
     )
   }
