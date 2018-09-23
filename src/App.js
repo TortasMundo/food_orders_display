@@ -19,7 +19,7 @@ class App extends Component {
         },
       ],
       currentOrderId: 0,
-      ring: false
+      ring: false,
     }
     this.socket = {}
   }
@@ -29,13 +29,13 @@ class App extends Component {
     this.socket.emit('subscribe_for_order_placements', config.mocks.store_location)
     this.socket.on('placed_order', order => {
       this.setState({
-        ring: true
+        ring: true,
       })
       this.setState({
         orders: [...this.state.orders, order],
       })
       this.setState({
-        currentOrderId: this.state.orders.length - 1
+        currentOrderId: this.state.orders.length - 1,
       })
     })
 
@@ -43,32 +43,32 @@ class App extends Component {
     if (response.data && response.data.length) {
       this.setState({ orders: response.data })
       this.setState({
-        currentOrderId: this.state.orders.length - 1
+        currentOrderId: this.state.orders.length - 1,
       })
     }
   }
 
-  nextOrder = (e) => {
-    e.preventDefault();
+  nextOrder = e => {
+    e.preventDefault()
     this.setState({
-      currentOrderId: Math.min(this.state.currentOrderId + 1, this.state.orders.length - 1)
+      currentOrderId: Math.min(this.state.currentOrderId + 1, this.state.orders.length - 1),
     })
   }
 
-  previousOrder = (e) => {
-    e.preventDefault();
+  previousOrder = e => {
+    e.preventDefault()
     this.setState({
-      currentOrderId: Math.max(this.state.currentOrderId - 1, 0)
+      currentOrderId: Math.max(this.state.currentOrderId - 1, 0),
     })
   }
 
   render() {
     let sound
     if (this.state.ring) {
-      sound = <ReactSound
-        url="sound.mp3"
-        playStatus={ReactSound.status.PLAYING}
-      />
+      sound = <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />
+      this.setState({
+        ring: false,
+      })
     }
     return (
       <div className="App" onClick={this.previousOrder} onContextMenu={this.nextOrder}>
