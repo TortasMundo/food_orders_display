@@ -51,6 +51,7 @@ class App extends Component {
   nextOrder = e => {
     e.preventDefault()
     this.setState({
+      ring: false,
       currentOrderId: Math.min(this.state.currentOrderId + 1, this.state.orders.length - 1),
     })
   }
@@ -58,18 +59,12 @@ class App extends Component {
   previousOrder = e => {
     e.preventDefault()
     this.setState({
+      ring: false,
       currentOrderId: Math.max(this.state.currentOrderId - 1, 0),
     })
   }
 
   render() {
-    let sound
-    if (this.state.ring) {
-      sound = <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />
-      this.setState({
-        ring: false,
-      })
-    }
     return (
       <div className="App" onClick={this.previousOrder} onContextMenu={this.nextOrder}>
         <div className="OrderNo">#{this.state.orders[this.state.currentOrderId].id}</div>
@@ -79,7 +74,8 @@ class App extends Component {
           {this.state.orders[this.state.currentOrderId].especialQuantity} <br />* Refrescos -{' '}
           {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br />
         </div>
-        {sound}
+        {this.state.ring &&
+          <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
       </div>
     )
   }
