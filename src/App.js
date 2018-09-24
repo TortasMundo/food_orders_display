@@ -75,7 +75,7 @@ class App extends Component {
             {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br/>
           </div>
           <div className="Totals">
-            Total venta:
+            Total venta: ${this.state.orders[this.state.currentOrderId].total}
           </div>
         </div>
         {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
