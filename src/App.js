@@ -75,8 +75,12 @@ class App extends Component {
             {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br/>
           </div>
           <div className="Totals">
-            Total venta: <br />
+            Total orden: <br />
             ${this.state.orders[this.state.currentOrderId].total}
+            <br />
+            <br />
+            Total día: <br />
+            ${this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)}
           </div>
         </div>
         {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
