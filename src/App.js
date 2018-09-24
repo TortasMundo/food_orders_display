@@ -48,25 +48,26 @@ class App extends Component {
     }
   }
 
-  nextOrder = e => {
-    e.preventDefault()
-    this.setState({
-      ring: false,
-      currentOrderId: Math.min(this.state.currentOrderId + 1, this.state.orders.length - 1),
-    })
-  }
-
-  previousOrder = e => {
-    e.preventDefault()
-    this.setState({
-      ring: false,
-      currentOrderId: Math.max(this.state.currentOrderId - 1, 0),
-    })
+  navigate = e => {
+    // e.preventDefault()
+    debugger
+    if (e.keyCode === 39) {
+      this.setState({
+        ring: false,
+        currentOrderId: Math.min(this.state.currentOrderId + 1, this.state.orders.length - 1),
+      })
+    }
+    if (e.keyCode === 37) {
+      this.setState({
+        ring: false,
+        currentOrderId: Math.max(this.state.currentOrderId - 1, 0),
+      })
+    }
   }
 
   render() {
     return (
-      <div className="App" onClick={this.previousOrder} onContextMenu={this.nextOrder}>
+      <div className="App" onKeyDown={this.navigate} tabIndex="0">
         <div className="OrderNo">#{this.state.orders[this.state.currentOrderId].id}</div>
         <div className="OrderDetails">
           * Jamón - {this.state.orders[this.state.currentOrderId].jamonQuantity} <br />* Lomo -{' '}
@@ -74,8 +75,7 @@ class App extends Component {
           {this.state.orders[this.state.currentOrderId].especialQuantity} <br />* Refrescos -{' '}
           {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br />
         </div>
-        {this.state.ring &&
-          <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
+        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
       </div>
     )
   }
