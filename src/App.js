@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import './App.css'
 import config from './config'
 import * as orderService from './services/orders'
@@ -41,7 +41,7 @@ class App extends Component {
 
     const response = await orderService.listOrders()
     if (response.data && response.data.length) {
-      this.setState({ orders: response.data })
+      this.setState({orders: response.data})
       this.setState({
         currentOrderId: this.state.orders.length - 1,
       })
@@ -49,8 +49,6 @@ class App extends Component {
   }
 
   navigate = e => {
-    // e.preventDefault()
-    debugger
     if (e.keyCode === 39) {
       this.setState({
         ring: false,
@@ -69,13 +67,18 @@ class App extends Component {
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
         <div className="OrderNo">#{this.state.orders[this.state.currentOrderId].id}</div>
-        <div className="OrderDetails">
-          * Jamón - {this.state.orders[this.state.currentOrderId].jamonQuantity} <br />* Lomo -{' '}
-          {this.state.orders[this.state.currentOrderId].lomoQuantity} <br />* Especial -{' '}
-          {this.state.orders[this.state.currentOrderId].especialQuantity} <br />* Refrescos -{' '}
-          {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br />
+        <div className="Info">
+          <div className="OrderDetails">
+            * Jamón - {this.state.orders[this.state.currentOrderId].jamonQuantity} <br/>* Lomo -{' '}
+            {this.state.orders[this.state.currentOrderId].lomoQuantity} <br/>* Especial -{' '}
+            {this.state.orders[this.state.currentOrderId].especialQuantity} <br/>* Refrescos -{' '}
+            {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br/>
+          </div>
+          <div className="Totals">
+            Total venta:
+          </div>
         </div>
-        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
+        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
       </div>
     )
   }
