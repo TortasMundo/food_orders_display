@@ -22,15 +22,15 @@
 
 .OrderDetails {
   text-align: left;
-  padding-top: 0.4em;
-  padding-left: 0.5em;
+  padding-top: 0.2em;
+  padding-left: 0.2em;
   border: 1px solid white;
-  flex: 70%;
+  flex: 80%;
 }
 
 .Totals {
-  font-size: 0.5em;
-  flex: 30%;
+  font-size: 0.4em;
+  flex: 20%;
   border: 1px solid white;
   padding-top: 0.4em;
   padding-left: 0.5em;
