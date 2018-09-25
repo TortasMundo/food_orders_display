@@ -30,21 +30,13 @@ class App extends Component {
     this.socket.on('placed_order', order => {
       this.setState({
         ring: true,
-      })
-      this.setState({
         orders: [...this.state.orders, order],
-      })
-      this.setState({
-        currentOrderId: this.state.orders.length - 1,
       })
     })
 
     const response = await orderService.listOrders()
     if (response.data && response.data.length) {
       this.setState({orders: response.data})
-      this.setState({
-        currentOrderId: this.state.orders.length - 1,
-      })
     }
   }
 
@@ -64,6 +56,8 @@ class App extends Component {
   }
 
   render() {
+    const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
+    const commission = dayTotal * 0.05
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
         <div className="OrderNo">#{this.state.orders[this.state.currentOrderId].id}</div>
@@ -80,7 +74,11 @@ class App extends Component {
             <br />
             <br />
             Total día: <br />
-            ${this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)}
+            ${dayTotal}
+            <br />
+            <br />
+            Comisión: <br />
+            ${commission}
           </div>
         </div>
         {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
