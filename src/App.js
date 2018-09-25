@@ -18,7 +18,7 @@ class App extends Component {
           refrescosQuantity: 0,
         },
       ],
-      currentOrderId: 0,
+      currentOrderIndex: 0,
       ring: false,
     }
     this.socket = {}
@@ -42,15 +42,16 @@ class App extends Component {
 
   navigate = e => {
     if (e.keyCode === 39) {
+      if (this.state.orders)
       this.setState({
         ring: false,
-        currentOrderId: Math.min(this.state.currentOrderId + 1, this.state.orders.length - 1),
+        currentOrderIndex: Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1),
       })
     }
     if (e.keyCode === 37) {
       this.setState({
         ring: false,
-        currentOrderId: Math.max(this.state.currentOrderId - 1, 0),
+        currentOrderIndex: Math.max(this.state.currentOrderIndex - 1, 0),
       })
     }
   }
@@ -58,20 +59,20 @@ class App extends Component {
   render() {
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
-    const cookedClass = this.state.orders[this.state.currentOrderId].status !== 'ORDERED' ? 'Cooked' : ''
+    const cookedClass = this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
-        <div className={`OrderNo ${cookedClass}`}>#{this.state.orders[this.state.currentOrderId].id}</div>
+        <div className={`OrderNo ${cookedClass}`}>#{this.state.orders[this.state.currentOrderIndex].id}</div>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderId].jamonQuantity} <br/>
-            * Lomo - {this.state.orders[this.state.currentOrderId].lomoQuantity} <br/>
-            * Especial - {this.state.orders[this.state.currentOrderId].especialQuantity} <br/>
-            * Refrescos - {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br/>
+            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamonQuantity} <br/>
+            * Lomo - {this.state.orders[this.state.currentOrderIndex].lomoQuantity} <br/>
+            * Especial - {this.state.orders[this.state.currentOrderIndex].especialQuantity} <br/>
+            * Refrescos - {this.state.orders[this.state.currentOrderIndex].refrescosQuantity} <br/>
           </div>
           <div className="Totals">
             Total orden: <br />
-            ${this.state.orders[this.state.currentOrderId].total}
+            ${this.state.orders[this.state.currentOrderIndex].total}
             <br />
             <br />
             Total día: <br />
