@@ -20,6 +20,10 @@
   border: 1px solid white;
 }
 
+.Cooked {
+  color: #fdff5b;
+}
+
 .OrderDetails {
   text-align: left;
   padding-top: 0.2em;

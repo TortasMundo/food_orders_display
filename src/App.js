@@ -58,15 +58,16 @@ class App extends Component {
   render() {
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
+    const cookedClass = this.state.orders[this.state.currentOrderId].status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
-        <div className="OrderNo">#{this.state.orders[this.state.currentOrderId].id}</div>
-        <div className="Info">
+        <div className={`OrderNo ${cookedClass}`}>#{this.state.orders[this.state.currentOrderId].id}</div>
+        <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderId].jamonQuantity} <br/>* Lomo -{' '}
-            {this.state.orders[this.state.currentOrderId].lomoQuantity} <br/>* Especial -{' '}
-            {this.state.orders[this.state.currentOrderId].especialQuantity} <br/>* Refrescos -{' '}
-            {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br/>
+            * Jamón - {this.state.orders[this.state.currentOrderId].jamonQuantity} <br/>
+            * Lomo - {this.state.orders[this.state.currentOrderId].lomoQuantity} <br/>
+            * Especial - {this.state.orders[this.state.currentOrderId].especialQuantity} <br/>
+            * Refrescos - {this.state.orders[this.state.currentOrderId].refrescosQuantity} <br/>
           </div>
           <div className="Totals">
             Total orden: <br />
