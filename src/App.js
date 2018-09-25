@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import config from './config'
 import * as orderService from './services/orders'
@@ -36,17 +36,26 @@ class App extends Component {
 
     const response = await orderService.listOrders()
     if (response.data && response.data.length) {
-      this.setState({orders: response.data})
+      this.setState({ orders: response.data })
     }
   }
 
   navigate = e => {
-    if (e.keyCode === 39) {
-      if (this.state.orders)
+    if (e.keyCode === 13) {
+      this.state.orders[this.state.currentOrderIndex].status = 'DELIVERING'
       this.setState({
         ring: false,
         currentOrderIndex: Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1),
       })
+    }
+    if (e.keyCode === 39) {
+      const nextIndex = Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1)
+      if (this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' || this.state.orders[nextIndex].status !== 'ORDERED') {
+        this.setState({
+          ring: false,
+          currentOrderIndex: nextIndex,
+        })
+      }
     }
     if (e.keyCode === 37) {
       this.setState({
@@ -59,31 +68,31 @@ class App extends Component {
   render() {
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
-    const cookedClass = this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
+    const cookedClass =
+      this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
-        <div className={`OrderNo ${cookedClass}`}>#{this.state.orders[this.state.currentOrderIndex].id}</div>
+        <div className={`OrderNo ${cookedClass}`}>
+          #{this.state.orders[this.state.currentOrderIndex].id}
+        </div>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamonQuantity} <br/>
-            * Lomo - {this.state.orders[this.state.currentOrderIndex].lomoQuantity} <br/>
-            * Especial - {this.state.orders[this.state.currentOrderIndex].especialQuantity} <br/>
-            * Refrescos - {this.state.orders[this.state.currentOrderIndex].refrescosQuantity} <br/>
+            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamonQuantity} <br />* Lomo -{' '}
+            {this.state.orders[this.state.currentOrderIndex].lomoQuantity} <br />* Especial -{' '}
+            {this.state.orders[this.state.currentOrderIndex].especialQuantity} <br />* Refrescos -{' '}
+            {this.state.orders[this.state.currentOrderIndex].refrescosQuantity} <br />
           </div>
           <div className="Totals">
-            Total orden: <br />
-            ${this.state.orders[this.state.currentOrderIndex].total}
+            Total orden: <br />${this.state.orders[this.state.currentOrderIndex].total}
             <br />
             <br />
-            Total día: <br />
-            ${dayTotal}
+            Total día: <br />${dayTotal}
             <br />
             <br />
-            Comisión: <br />
-            ${commission}
+            Comisión: <br />${commission}
           </div>
         </div>
-        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
+        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
       </div>
     )
   }
