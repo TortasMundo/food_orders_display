@@ -32,6 +32,17 @@ class App extends Component {
         ring: true,
         orders: [...this.state.orders, order],
       })
+      if (
+        this.state.currentOrderIndex === this.state.orders.length - 2 &&
+        this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
+      ) {
+        this.setState({
+          currentOrderIndex: Math.min(
+            this.state.currentOrderIndex + 1,
+            this.state.orders.length - 1,
+          ),
+        })
+      }
     })
 
     const response = await orderService.listOrders()
@@ -50,7 +61,10 @@ class App extends Component {
     }
     if (e.keyCode === 39) {
       const nextIndex = Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1)
-      if (this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' || this.state.orders[nextIndex].status !== 'ORDERED') {
+      if (
+        this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ||
+        this.state.orders[nextIndex].status !== 'ORDERED'
+      ) {
         this.setState({
           ring: false,
           currentOrderIndex: nextIndex,
