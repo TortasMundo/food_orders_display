@@ -12,10 +12,10 @@ class App extends Component {
       orders: [
         {
           id: 0,
-          jamonQuantity: 0,
-          lomoQuantity: 0,
-          especialQuantity: 0,
-          refrescosQuantity: 0,
+          jamon_quantity: 0,
+          lomo_quantity: 0,
+          especial_quantity: 0,
+          refrescos_quantity: 0,
         },
       ],
       currentOrderIndex: 0,
@@ -91,10 +91,10 @@ class App extends Component {
         </div>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamonQuantity} <br />* Lomo -{' '}
-            {this.state.orders[this.state.currentOrderIndex].lomoQuantity} <br />* Especial -{' '}
-            {this.state.orders[this.state.currentOrderIndex].especialQuantity} <br />* Refrescos -{' '}
-            {this.state.orders[this.state.currentOrderIndex].refrescosQuantity} <br />
+            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br />* Lomo -{' '}
+            {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br />* Especial -{' '}
+            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br />* Refrescos -{' '}
+            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br />
           </div>
           <div className="Totals">
             Total orden: <br />${this.state.orders[this.state.currentOrderIndex].total}
