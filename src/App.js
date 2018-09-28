@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import './App.css'
 import config from './config'
 import * as orderService from './services/orders'
@@ -9,15 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      orders: [
-        {
-          id: 0,
-          jamon_quantity: 0,
-          lomo_quantity: 0,
-          especial_quantity: 0,
-          refrescos_quantity: 0,
-        },
-      ],
+      orders: [],
       currentOrderIndex: 0,
       ring: false,
     }
@@ -80,6 +72,7 @@ class App extends Component {
   }
 
   render() {
+    if (!this.state.orders || !this.state.orders.length) return null
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
     const cookedClass =
@@ -87,26 +80,26 @@ class App extends Component {
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
         <div className={`OrderNo ${cookedClass}`}>
-          #{this.state.orders[this.state.currentOrderIndex].id}
+          #{this.state.currentOrderIndex + 1}
         </div>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br />* Lomo -{' '}
-            {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br />* Especial -{' '}
-            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br />* Refrescos -{' '}
-            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br />
+            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br/>* Lomo -{' '}
+            {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br/>* Especial -{' '}
+            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br/>* Refrescos -{' '}
+            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br/>
           </div>
           <div className="Totals">
-            Total orden: <br />${this.state.orders[this.state.currentOrderIndex].total}
-            <br />
-            <br />
-            Total día: <br />${dayTotal}
-            <br />
-            <br />
-            Comisión: <br />${commission}
+            Total orden: <br/>${this.state.orders[this.state.currentOrderIndex].total}
+            <br/>
+            <br/>
+            Total día: <br/>${dayTotal}
+            <br/>
+            <br/>
+            Comisión: <br/>${commission}
           </div>
         </div>
-        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
+        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
       </div>
     )
   }
