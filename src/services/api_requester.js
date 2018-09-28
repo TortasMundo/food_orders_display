@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '../config'
+import moment from 'moment-timezone'
 
 export async function send(request) {
   const info = {
@@ -7,7 +8,8 @@ export async function send(request) {
     url: config.API_URL + '/' + request.path,
     data: JSON.stringify(request.payload),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'timezone': moment.tz.guess()
     }
   }
   console.log('info', info)
