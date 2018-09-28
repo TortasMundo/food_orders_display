@@ -43,8 +43,9 @@ class App extends Component {
     }
   }
 
-  navigate = e => {
+  navigate = async e => {
     if (e.keyCode === 13) {
+      orderService.updateStatus(this.state.orders[this.state.currentOrderIndex].code, 'COOKED')
       this.state.orders[this.state.currentOrderIndex].status = 'DELIVERING'
       this.setState({
         ring: false,
