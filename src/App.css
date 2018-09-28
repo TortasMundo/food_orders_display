@@ -11,13 +11,22 @@
   font-size: 10em;
 }
 
-.Info {
+.Info, .Header {
   display: flex;
 }
 
 .OrderNo {
-  text-align: center;
+  flex: 15%;
+  text-align: left;
   border: 1px solid white;
+  padding-left: 0.5em;
+}
+
+.Notes {
+  flex: 75%;
+  text-align: left;
+  padding-left: 0.5em;
+  font-size: 0.5em;
 }
 
 .Cooked {

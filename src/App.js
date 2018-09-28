@@ -80,8 +80,13 @@ class App extends Component {
       this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0">
-        <div className={`OrderNo ${cookedClass}`}>
-          #{this.state.currentOrderIndex + 1}
+        <div className={`Header ${cookedClass}`}>
+            <div className={`OrderNo`}>
+              #{this.state.currentOrderIndex + 1}
+            </div>
+          <div className={`Notes`}>
+            {this.state.orders[this.state.currentOrderIndex].notes}
+          </div>
         </div>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
