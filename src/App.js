@@ -13,17 +13,42 @@ class App extends Component {
       currentOrderIndex: 0,
       ring: false,
     }
-    this.socket = {}
+    // this.socket = {}
   }
 
   async componentDidMount() {
-    this.socket = io(config.API_URL)
-    this.socket.emit('subscribe_for_order_placements', config.mocks.store_location)
-    this.socket.on('placed_order', order => {
-      this.setState({
-        ring: true,
-        orders: [...this.state.orders, order],
-      })
+    // this.socket = io(config.API_URL)
+    // this.socket.emit('subscribe_for_order_placements', config.mocks.store_location)
+    // this.socket.on('placed_order', order => {
+    //   this.setState({
+    //     ring: true,
+    //     orders: [...this.state.orders, order],
+    //   })
+    //   if (
+    //     this.state.currentOrderIndex === this.state.orders.length - 2 &&
+    //     this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
+    //   ) {
+    //     this.setState({
+    //       currentOrderIndex: Math.min(
+    //         this.state.currentOrderIndex + 1,
+    //         this.state.orders.length - 1,
+    //       ),
+    //     })
+    //   }
+    // })
+
+    setInterval(async () => {
+      const response = await orderService.listOrders()
+
+      if (response.data && response.data.length) {
+        if (response.data.length > this.state.orders.length) {
+          this.setState({ ring: true })
+        } else {
+          this.setState({ ring: false })
+        }
+        this.setState({ orders: response.data })
+      }
+
       if (
         this.state.currentOrderIndex === this.state.orders.length - 2 &&
         this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
@@ -35,18 +60,15 @@ class App extends Component {
           ),
         })
       }
-    })
-
-    const response = await orderService.listOrders()
-    if (response.data && response.data.length) {
-      this.setState({ orders: response.data })
-    }
+    }, 10000)
   }
 
   navigate = async e => {
     if (e.keyCode === 13) {
-      orderService.updateStatus(this.state.orders[this.state.currentOrderIndex].code, 'COOKED')
-      this.state.orders[this.state.currentOrderIndex].status = 'DELIVERING'
+      if (this.state.orders[this.state.currentOrderIndex].status === 'ORDERED') {
+        orderService.updateStatus(this.state.orders[this.state.currentOrderIndex].code, 'COOKED')
+        this.state.orders[this.state.currentOrderIndex].status = 'DELIVERING'
+      }
       this.setState({
         ring: false,
         currentOrderIndex: Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1),
@@ -111,7 +133,7 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.disconnect()
+    // this.socket.disconnect()
   }
 }
 
