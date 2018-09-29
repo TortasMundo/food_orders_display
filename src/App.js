@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import './App.css'
-import config from './config'
 import * as orderService from './services/orders'
-import io from 'socket.io-client'
 import ReactSound from 'react-sound'
 
 class App extends Component {
@@ -13,30 +11,9 @@ class App extends Component {
       currentOrderIndex: 0,
       ring: false,
     }
-    // this.socket = {}
   }
 
   async componentDidMount() {
-    // this.socket = io(config.API_URL)
-    // this.socket.emit('subscribe_for_order_placements', config.mocks.store_location)
-    // this.socket.on('placed_order', order => {
-    //   this.setState({
-    //     ring: true,
-    //     orders: [...this.state.orders, order],
-    //   })
-    //   if (
-    //     this.state.currentOrderIndex === this.state.orders.length - 2 &&
-    //     this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
-    //   ) {
-    //     this.setState({
-    //       currentOrderIndex: Math.min(
-    //         this.state.currentOrderIndex + 1,
-    //         this.state.orders.length - 1,
-    //       ),
-    //     })
-    //   }
-    // })
-
     setInterval(async () => {
       const response = await orderService.listOrders()
 
@@ -95,48 +72,41 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.orders || !this.state.orders.length) return null
+    if (!this.state.orders || !this.state.orders.length) return <h1>{'Obteniendo ordenes...'}</h1>
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
     const cookedClass =
       this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
     return (
-      <div className="App" onKeyDown={this.navigate} tabIndex="0">
+      <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
         <div className={`Header ${cookedClass}`}>
-            <div className={`OrderNo`}>
-              #{this.state.currentOrderIndex + 1}
-            </div>
-          <div className={`Notes`}>
-            {this.state.orders[this.state.currentOrderIndex].notes}
-          </div>
-          <div className={`Clock`}>
-            {}
-          </div>
+          <div className={`OrderNo`}>#{this.state.currentOrderIndex + 1}</div>
+          <div className={`Notes`}>{this.state.orders[this.state.currentOrderIndex].notes}</div>
+          <div className={`Clock`}>{}</div>
         </div>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br/>* Lomo -{' '}
-            {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br/>* Especial -{' '}
-            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br/>* Refrescos -{' '}
-            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br/>
+            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br />* Lomo
+            - {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br />* Especial -{' '}
+            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br />* Refrescos -{' '}
+            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br />
           </div>
           <div className="Totals">
-            Total orden: <br/>${this.state.orders[this.state.currentOrderIndex].total}
-            <br/>
-            <br/>
-            Total día: <br/>${dayTotal}
-            <br/>
-            <br/>
-            Comisión: <br/>${commission}
+            Total orden: <br />${this.state.orders[this.state.currentOrderIndex].total}
+            <br />
+            <br />
+            Total día: <br />${dayTotal}
+            <br />
+            <br />
+            Comisión: <br />${commission}
           </div>
         </div>
-        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
+        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
       </div>
     )
   }
-
-  componentWillUnmount() {
-    // this.socket.disconnect()
+  componentDidUpdate() {
+    this._input && this._input.focus();
   }
 }
 
