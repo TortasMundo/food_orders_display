@@ -18,12 +18,12 @@ class App extends Component {
       const response = await orderService.listOrders()
 
       if (response.data && response.data.length) {
-        if (this.state.orders.length > 0 && response.data.length > this.state.orders.length) {
+        this.setState({ orders: response.data })
+        if (response.data.find(o => o.status === 'ORDERED')) {
           this.setState({ ring: true })
         } else {
           this.setState({ ring: false })
         }
-        this.setState({ orders: response.data })
       }
 
       if (
