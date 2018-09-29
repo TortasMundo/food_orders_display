@@ -11,5 +11,5 @@ export async function listOrders () {
 export async function updateStatus (code, newStatus) {
   const request = new UpdateStatusRequest(code, newStatus)
   const response = await apiRequester.send(request)
-  return response.data
+  return response && response.data
 }

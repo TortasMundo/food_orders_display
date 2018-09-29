@@ -17,13 +17,13 @@ class App extends Component {
     setInterval(async () => {
       const response = await orderService.listOrders()
 
-      if (response.data && response.data.length) {
-        this.setState({ orders: response.data })
-        if (response.data.find(o => o.status === 'ORDERED')) {
+      if (response && response.data && response.data.length) {
+        if (response.data.length > this.state.orders.length && response.data.find(o => o.status === 'ORDERED')) {
           this.setState({ ring: true })
         } else {
           this.setState({ ring: false })
         }
+        this.setState({ orders: response.data })
       }
 
       if (
