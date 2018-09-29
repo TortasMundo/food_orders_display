@@ -41,7 +41,7 @@ class App extends Component {
       const response = await orderService.listOrders()
 
       if (response.data && response.data.length) {
-        if (response.data.length > this.state.orders.length) {
+        if (this.state.orders.length > 0 && response.data.length > this.state.orders.length) {
           this.setState({ ring: true })
         } else {
           this.setState({ ring: false })
@@ -108,6 +108,9 @@ class App extends Component {
             </div>
           <div className={`Notes`}>
             {this.state.orders[this.state.currentOrderIndex].notes}
+          </div>
+          <div className={`Clock`}>
+            {}
           </div>
         </div>
         <div className={`Info ${cookedClass}`}>
