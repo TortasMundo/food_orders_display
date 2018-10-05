@@ -5,7 +5,7 @@ import UpdateStatusRequest from './requests/update_status'
 export async function listOrders () {
   const request = new ListOrdersRequest.Builder().build()
   const response = await apiRequester.send(request)
-  return response.data
+  return response && response.data
 }
 
 export async function updateStatus (code, newStatus) {
