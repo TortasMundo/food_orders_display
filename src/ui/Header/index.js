@@ -7,7 +7,7 @@ export const Header = (props) => {
     { ...styles.container, ...styles.cooked }
   return (<div style={containerStyle}>
     <div style={styles.orderNo}>#{props.orderNo}</div>
-    <div style={styles.notes}>ohl;ohi ohoihjoijo oih oijh oijoijohiouj  ohiouh ouh</div>
+    <div style={styles.notes}>{props.notes}</div>
     <div style={styles.time}>{props.time}</div>
   </div>)
 }
