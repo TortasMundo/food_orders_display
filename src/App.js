@@ -1,9 +1,11 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import * as orderService from './services/orders'
 import ReactSound from 'react-sound'
 import { Totals } from './ui/Totals'
 import { Header } from './ui/Header'
+import moment from 'moment'
+import momentDuration from 'moment-duration-format'
 
 class App extends Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class App extends Component {
       orders: [],
       currentOrderIndex: 0,
       ring: false,
+      orderedTimes: {},
     }
   }
 
@@ -40,6 +43,25 @@ class App extends Component {
         })
       }
     }, 10000)
+
+    this.tick()
+    this.timer = setInterval(() => this.tick(), 1000)
+  }
+
+  tick() {
+    const currentOrder = this.state.orders[this.state.currentOrderIndex]
+    if (currentOrder) {
+      const orderCode = currentOrder.code
+      const seconds = (new Date().getTime() - moment(currentOrder.ordered_at)) / 1000
+      const time = moment.duration(seconds, 'seconds').format('HH:mm:ss')
+      this.setState({
+        ring: false,
+        orderedTimes: {
+          ...this.state.orderedTimes,
+          [orderCode]: time,
+        },
+      })
+    }
   }
 
   navigate = async e => {
@@ -81,25 +103,31 @@ class App extends Component {
     const orderNo = this.state.currentOrderIndex + 1
     const notes = this.state.orders[this.state.currentOrderIndex].notes
     const status = this.state.orders[this.state.currentOrderIndex].status
+    const time = this.state.orderedTimes[this.state.orders[this.state.currentOrderIndex].code]
     const cookedClass = status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
         <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
-        <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status}/>
+        <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status} time={time}/>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br />* Lomo
-            - {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br />* Especial -{' '}
-            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br />* Refrescos -{' '}
-            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br />
+            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br/>* Lomo
+            - {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br/>* Especial -{' '}
+            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br/>* Refrescos -{' '}
+            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br/>
           </div>
         </div>
-        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
+        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
       </div>
     )
   }
+
   componentDidUpdate() {
-    this._input && this._input.focus();
+    this._input && this._input.focus()
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
   }
 }
 
