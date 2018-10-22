@@ -3,6 +3,7 @@ import './App.css'
 import * as orderService from './services/orders'
 import ReactSound from 'react-sound'
 import { Totals } from './ui/Totals'
+import { Header } from './ui/Header'
 
 class App extends Component {
   constructor(props) {
@@ -77,16 +78,14 @@ class App extends Component {
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
     const totalOrden = this.state.orders[this.state.currentOrderIndex].total
-    const cookedClass =
-      this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
+    const orderNo = this.state.currentOrderIndex + 1
+    const notes = this.state.orders[this.state.currentOrderIndex].notes
+    const status = this.state.orders[this.state.currentOrderIndex].status
+    const cookedClass = status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
         <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
-        <div className={`Header ${cookedClass}`}>
-          <div className={`OrderNo`}>#{this.state.currentOrderIndex + 1}</div>
-          <div className={`Notes`}>{this.state.orders[this.state.currentOrderIndex].notes}</div>
-          <div className={`Clock`}>{}</div>
-        </div>
+        <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status}/>
         <div className={`Info ${cookedClass}`}>
           <div className="OrderDetails">
             * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br />* Lomo
