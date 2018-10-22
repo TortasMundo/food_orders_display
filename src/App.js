@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import * as orderService from './services/orders'
 import ReactSound from 'react-sound'
+import { Totals } from './ui/Totals'
 
 class App extends Component {
   constructor(props) {
@@ -75,10 +76,12 @@ class App extends Component {
     if (!this.state.orders || !this.state.orders.length) return <h1>{'Obteniendo ordenes...'}</h1>
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
+    const totalOrden = this.state.orders[this.state.currentOrderIndex].total
     const cookedClass =
       this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
+        <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
         <div className={`Header ${cookedClass}`}>
           <div className={`OrderNo`}>#{this.state.currentOrderIndex + 1}</div>
           <div className={`Notes`}>{this.state.orders[this.state.currentOrderIndex].notes}</div>
@@ -90,15 +93,6 @@ class App extends Component {
             - {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br />* Especial -{' '}
             {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br />* Refrescos -{' '}
             {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br />
-          </div>
-          <div className="Totals">
-            Total orden: <br />${this.state.orders[this.state.currentOrderIndex].total}
-            <br />
-            <br />
-            Total día: <br />${dayTotal}
-            <br />
-            <br />
-            Comisión: <br />${commission}
           </div>
         </div>
         {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING} />}
