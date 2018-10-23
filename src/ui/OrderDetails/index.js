@@ -2,7 +2,7 @@ import React from 'react'
 import { styles } from './styles'
 
 export const OrderDetails = (props) => {
-  const containerStyle = props.status === 'ORDERED' ?
+  const containerStyle = props.currentOrder.status === 'ORDERED' ?
     styles.container :
     { ...styles.container, ...styles.cooked }
   return (<div style={containerStyle}>
