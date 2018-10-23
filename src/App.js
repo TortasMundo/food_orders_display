@@ -3,8 +3,9 @@ import './App.css'
 import * as orderService from './services/orders'
 import { Totals } from './ui/Totals'
 import { Header } from './ui/Header'
+import { OrderDetails } from './ui/OrderDetails'
 import moment from 'moment'
-import momentDuration from 'moment-duration-format'
+import momentDuration from 'moment-duration-format' // do not delete
 
 class App extends Component {
   constructor(props) {
@@ -96,24 +97,18 @@ class App extends Component {
     if (!this.state.orders || !this.state.orders.length) return <h1>{'Obteniendo ordenes...'}</h1>
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
-    const totalOrden = this.state.orders[this.state.currentOrderIndex].total
+    const currentOrder = this.state.orders[this.state.currentOrderIndex]
+    const totalOrden = currentOrder.total
     const orderNo = this.state.currentOrderIndex + 1
-    const notes = this.state.orders[this.state.currentOrderIndex].notes
-    const status = this.state.orders[this.state.currentOrderIndex].status
-    const time = this.state.orderedTimes[this.state.orders[this.state.currentOrderIndex].code]
+    const notes = currentOrder.notes
+    const status = currentOrder.status
+    const time = this.state.orderedTimes[currentOrder.code]
     const cookedClass = status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
         <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
         <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status} time={time}/>
-        <div className={`Info ${cookedClass}`}>
-          <div className="OrderDetails">
-            * Jamón - {this.state.orders[this.state.currentOrderIndex].jamon_quantity} <br/>* Lomo
-            - {this.state.orders[this.state.currentOrderIndex].lomo_quantity} <br/>* Especial -{' '}
-            {this.state.orders[this.state.currentOrderIndex].especial_quantity} <br/>* Refrescos -{' '}
-            {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br/>
-          </div>
-        </div>
+        <OrderDetails currentOrder={currentOrder}/>
       </div>
     )
   }
