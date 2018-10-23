@@ -36,6 +36,7 @@ class App extends Component {
     }
 
     if (
+      this.state.orders.length !== response.data.length &&
       this.state.currentOrderIndex === this.state.orders.length - 2 &&
       this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
     ) {
