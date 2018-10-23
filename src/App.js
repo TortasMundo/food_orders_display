@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
 import * as orderService from './services/orders'
-import ReactSound from 'react-sound'
 import { Totals } from './ui/Totals'
 import { Header } from './ui/Header'
 import moment from 'moment'
@@ -13,39 +12,40 @@ class App extends Component {
     this.state = {
       orders: [],
       currentOrderIndex: 0,
-      ring: false,
       orderedTimes: {},
     }
+    this.audio = new Audio("sound.mp3")
   }
 
   async componentDidMount() {
-    setInterval(async () => {
-      const response = await orderService.listOrders()
-
-      if (response && response.data && response.data.length) {
-        if (response.data.length > this.state.orders.length && response.data.find(o => o.status === 'ORDERED')) {
-          this.setState({ ring: true })
-        } else {
-          this.setState({ ring: false })
-        }
-        this.setState({ orders: response.data })
-      }
-
-      if (
-        this.state.currentOrderIndex === this.state.orders.length - 2 &&
-        this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
-      ) {
-        this.setState({
-          currentOrderIndex: Math.min(
-            this.state.currentOrderIndex + 1,
-            this.state.orders.length - 1,
-          ),
-        })
-      }
-    }, 10000)
+    await this.getOrders()
+    setInterval(this.getOrders, 10000)
 
     this.tick()
     this.timer = setInterval(() => this.tick(), 1000)
+  }
+
+  getOrders = async () => {
+    const response = await orderService.listOrders()
+
+    if (response && response.data && response.data.length) {
+      if (response.data.length > this.state.orders.length && response.data.find(o => o.status === 'ORDERED')) {
+        this.audio.play();
+      }
+      this.setState({ orders: response.data })
+    }
+
+    if (
+      this.state.currentOrderIndex === this.state.orders.length - 2 &&
+      this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
+    ) {
+      this.setState({
+        currentOrderIndex: Math.min(
+          this.state.currentOrderIndex + 1,
+          this.state.orders.length - 1,
+        ),
+      })
+    }
   }
 
   tick() {
@@ -55,7 +55,6 @@ class App extends Component {
       const seconds = (new Date().getTime() - moment(currentOrder.ordered_at)) / 1000
       const time = moment.duration(seconds, 'seconds').format('HH:mm:ss')
       this.setState({
-        ring: false,
         orderedTimes: {
           ...this.state.orderedTimes,
           [orderCode]: time,
@@ -71,7 +70,6 @@ class App extends Component {
         this.state.orders[this.state.currentOrderIndex].status = 'DELIVERING'
       }
       this.setState({
-        ring: false,
         currentOrderIndex: Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1),
       })
     }
@@ -82,14 +80,12 @@ class App extends Component {
         this.state.orders[nextIndex].status !== 'ORDERED'
       ) {
         this.setState({
-          ring: false,
           currentOrderIndex: nextIndex,
         })
       }
     }
     if (e.keyCode === 37) {
       this.setState({
-        ring: false,
         currentOrderIndex: Math.max(this.state.currentOrderIndex - 1, 0),
       })
     }
@@ -117,7 +113,6 @@ class App extends Component {
             {this.state.orders[this.state.currentOrderIndex].refrescos_quantity} <br/>
           </div>
         </div>
-        {this.state.ring && <ReactSound url="sound.mp3" playStatus={ReactSound.status.PLAYING}/>}
       </div>
     )
   }
