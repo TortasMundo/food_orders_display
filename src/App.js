@@ -4,6 +4,7 @@ import * as orderService from './services/orders'
 import { Totals } from './ui/Totals'
 import { Header } from './ui/Header'
 import { OrderDetails } from './ui/OrderDetails'
+import { Waiting } from './ui/Waiting'
 import moment from 'moment'
 import momentDuration from 'moment-duration-format' // do not delete
 
@@ -94,7 +95,7 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.orders || !this.state.orders.length) return <h1>{'Obteniendo ordenes...'}</h1>
+    if (!this.state.orders || !this.state.orders.length) return (<Waiting />)
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
     const currentOrder = this.state.orders[this.state.currentOrderIndex]
@@ -103,7 +104,6 @@ class App extends Component {
     const notes = currentOrder.notes
     const status = currentOrder.status
     const time = this.state.orderedTimes[currentOrder.code]
-    const cookedClass = status !== 'ORDERED' ? 'Cooked' : ''
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
         <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
