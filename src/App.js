@@ -34,24 +34,26 @@ class App extends Component {
       if (response.data.length > this.state.orders.length && response.data.find(o => o.status === 'ORDERED')) {
         this.audio.play();
       }
-      this.setState({ orders: response.data })
-    }
-
-    if (
-      this.state.orders.length !== response.data.length &&
-      this.state.currentOrderIndex === this.state.orders.length - 2 &&
-      this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
-    ) {
-      this.setState({
-        currentOrderIndex: Math.min(
-          this.state.currentOrderIndex + 1,
-          this.state.orders.length - 1,
-        ),
-      })
+      if (
+        this.state.orders.length !== response.data.length &&
+        this.state.currentOrderIndex === this.state.orders.length - 1 &&
+        this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED'
+      ) {
+        this.setState({
+          orders: response.data,
+          currentOrderIndex: Math.min(
+            this.state.currentOrderIndex + 1,
+            this.state.orders.length,
+          ),
+        })
+      }
+      else {
+        this.setState({ orders: response.data })
+      }
     }
   }
 
-  tick() {
+  tick = () => {
     const currentOrder = this.state.orders[this.state.currentOrderIndex]
     if (currentOrder) {
       const orderCode = currentOrder.code

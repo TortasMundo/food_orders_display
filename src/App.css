@@ -8,19 +8,3 @@
   color: white;
   font-size: 10em;
 }
-
-.Info, .Header {
-  display: flex;
-}
-
-.Cooked {
-  color: #fdff5b;
-}
-
-.OrderDetails {
-  text-align: left;
-  padding-top: 0.2em;
-  padding-left: 0.2em;
-  border: 1px solid white;
-  flex: 80%;
-}
