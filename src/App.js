@@ -7,6 +7,7 @@ import { OrderDetails } from './ui/OrderDetails'
 import { Waiting } from './ui/Waiting'
 import moment from 'moment'
 import momentDuration from 'moment-duration-format' // do not delete
+import Swipeable from 'react-swipeable'
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class App extends Component {
       currentOrderIndex: 0,
       orderedTimes: {},
     }
-    this.audio = new Audio("sound.mp3")
+    this.audio = new Audio('sound.mp3')
   }
 
   async componentDidMount() {
@@ -32,7 +33,7 @@ class App extends Component {
 
     if (response && response.data && response.data.length) {
       if (response.data.length > this.state.orders.length && response.data.find(o => o.status === 'ORDERED')) {
-        this.audio.play();
+        this.audio.play()
       }
       if (
         this.state.orders.length !== response.data.length &&
@@ -79,25 +80,33 @@ class App extends Component {
       })
     }
     if (e.keyCode === 39) {
-      const nextIndex = Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1)
-      if (
-        this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ||
-        this.state.orders[nextIndex].status !== 'ORDERED'
-      ) {
-        this.setState({
-          currentOrderIndex: nextIndex,
-        })
-      }
+      this.nextOrder()
     }
     if (e.keyCode === 37) {
+      this.previousOrder()
+    }
+  }
+
+  nextOrder = () => {
+    const nextIndex = Math.min(this.state.currentOrderIndex + 1, this.state.orders.length - 1)
+    if (
+      this.state.orders[this.state.currentOrderIndex].status !== 'ORDERED' ||
+      this.state.orders[nextIndex].status !== 'ORDERED'
+    ) {
       this.setState({
-        currentOrderIndex: Math.max(this.state.currentOrderIndex - 1, 0),
+        currentOrderIndex: nextIndex,
       })
     }
   }
 
+  previousOrder = () => {
+    this.setState({
+      currentOrderIndex: Math.max(this.state.currentOrderIndex - 1, 0),
+    })
+  }
+
   render() {
-    if (!this.state.orders || !this.state.orders.length) return (<Waiting />)
+    if (!this.state.orders || !this.state.orders.length) return (<Waiting/>)
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
     const currentOrder = this.state.orders[this.state.currentOrderIndex]
@@ -108,9 +117,11 @@ class App extends Component {
     const time = this.state.orderedTimes[currentOrder.code]
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
-        <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
-        <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status} time={time}/>
-        <OrderDetails currentOrder={currentOrder}/>
+        <Swipeable onSwipedRight={this.nextOrder} onSwipedLeft={this.previousOrder}>
+          <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
+          <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status} time={time}/>
+          <OrderDetails currentOrder={currentOrder}/>
+        </Swipeable>
       </div>
     )
   }
