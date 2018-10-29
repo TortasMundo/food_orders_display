@@ -117,7 +117,7 @@ class App extends Component {
     const time = this.state.orderedTimes[currentOrder.code]
     return (
       <div className="App" onKeyDown={this.navigate} tabIndex="0" ref={c => (this._input = c)}>
-        <Swipeable onSwipedRight={this.nextOrder} onSwipedLeft={this.previousOrder}>
+        <Swipeable onSwipedRight={this.previousOrder} onSwipedLeft={this.nextOrder}>
           <Totals dayTotal={dayTotal} commission={commission} totalOrden={totalOrden}/>
           <Header orderNo={orderNo} notes={notes} totalOrden={totalOrden} status={status} time={time}/>
           <OrderDetails currentOrder={currentOrder}/>
