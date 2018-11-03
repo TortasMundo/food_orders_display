@@ -1,7 +1,7 @@
 module.exports = {
   get API_URL() {
     return window.location.href === 'https://tortasmundo-orders-display.herokuapp.com/'
-      ? `https://tortasmundo-kitchen-api.herokuapp.com` : 'http://localhost:4000'
+      ? `tortasmundo-kitchen-api-1927554484.us-east-2.elb.amazonaws.com` : 'http://localhost:4000'
   },
   mocks: {
     store_location: {
