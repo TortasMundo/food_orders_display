@@ -1,16 +1,11 @@
 FROM node:10.12
 
-# Create app directory
-WORKDIR /var/app
+COPY . .
 
-WORKDIR /tmp
-COPY package.json /tmp/
-RUN npm install
-WORKDIR /var/app
-COPY . /var/app/
-RUN cp -a /tmp/node_modules /var/app/
+RUN npm run build --production
 
-RUN npm install -g nodemon
+RUN npm install -g serve
+
+CMD serve -s build -p 3000
 
 EXPOSE 3000
-CMD [ "npm", "start" ]
