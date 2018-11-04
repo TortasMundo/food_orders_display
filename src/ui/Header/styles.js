@@ -12,14 +12,14 @@ export const styles = {
     fontSize: '4vw'
   },
   notes: {
-    flex: '70%',
+    flex: '80%',
     textAlign: 'left',
     paddingLeft: '0.5em',
     border: '1px solid white',
-    fontSize: '2vw'
+    fontSize: '2.5vw'
   },
   time: {
-    flex: '20%',
+    flex: '10%',
     border: '1px solid white',
     paddingRight: '0.2em',
     paddingLeft: '0.2em',
