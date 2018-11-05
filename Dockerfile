@@ -4,6 +4,8 @@ COPY . .
 
 RUN npm i -g yarn
 
+RUN yarn install
+
 RUN yarn run build --production
 
 RUN yarn install -g serve
