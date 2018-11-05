@@ -2,9 +2,11 @@ FROM node:10.12
 
 COPY . .
 
-RUN npm run build --production
+RUN npm i -g yarn
 
-RUN npm install -g serve
+RUN yarn run build --production
+
+RUN yarn install -g serve
 
 CMD serve -s build -p 3000
 
