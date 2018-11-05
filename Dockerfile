@@ -8,7 +8,7 @@ RUN yarn install
 
 RUN yarn run build --production
 
-RUN yarn install -g serve
+RUN yarn global add serve
 
 CMD serve -s build -p 3000
 
