@@ -106,7 +106,9 @@ class App extends Component {
   }
 
   render() {
-    if (!this.state.orders || !this.state.orders.length) return (<Waiting/>)
+    if (!this.state.orders || !this.state.orders.length || !this.state.orders[this.state.currentOrderIndex]){
+      return (<Waiting/>)
+    }
     const dayTotal = this.state.orders.map(o => Number(o.total)).reduce((acc, val) => acc + val)
     const commission = dayTotal * 0.05
     const currentOrder = this.state.orders[this.state.currentOrderIndex]
