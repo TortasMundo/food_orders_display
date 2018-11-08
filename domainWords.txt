@@ -1,0 +1,9 @@
+kitchen
+orders
+order
+totals
+notes
+jamon
+lomo
+especial
+refrescos

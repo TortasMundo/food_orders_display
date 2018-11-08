@@ -1726,6 +1726,11 @@ coa@~1.0.1:
   dependencies:
     q "^1.1.2"
 
+code-cleanliness-ratio@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/code-cleanliness-ratio/-/code-cleanliness-ratio-1.0.3.tgz#0d6238e785ccad2a45f7e7dd4d1737b760438083"
+  integrity sha512-/XkEmv45btzJHUyJLWdFybM3P8UCsmcFuBHLl7fp+7PPkNw/H+QCKi9AmUmvXSiV6+Yx1U36vjR3gdAFOfwCqw==
+
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
