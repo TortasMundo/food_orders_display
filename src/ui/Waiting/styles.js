@@ -4,6 +4,10 @@ export const styles = {
     height: '100%',
     width: '100%',
     textAlign: 'center',
-    marginTop: '5em'
+    marginTop: '2em'
+  },
+  logo: {
+    width: '10em',
+    height: '8em'
   }
 }
