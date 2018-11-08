@@ -1,0 +1,6 @@
+[
+  {
+    "name": "kitchen-web-ui",
+    "imageUri": "421154629972.dkr.ecr.us-east-2.amazonaws.com/tortasmundo/kitchen-web-ui:latest"
+  }
+]
