@@ -6,6 +6,9 @@ module.exports = {
     if (window.location.href === 'http://tortasmundo-kitchen-web-ui-129681185.us-east-2.elb.amazonaws.com/') {
       return 'http://tortasmundo-kitchen-api-1604690468.us-east-2.elb.amazonaws.com'
     }
+    if (window.location.href === 'http://ec2-18-218-154-49.us-east-2.compute.amazonaws.com:3000/') {
+      return 'http://ec2-18-218-154-49.us-east-2.compute.amazonaws.com:4000'
+    }
     return  'http://localhost:4000'
   },
   mocks: {
