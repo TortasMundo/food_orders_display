@@ -9,6 +9,9 @@ module.exports = {
     if (window.location.href === 'http://ec2-18-218-154-49.us-east-2.compute.amazonaws.com:60001/') {
       return 'http://ec2-18-218-154-49.us-east-2.compute.amazonaws.com:5000'
     }
+    if (window.location.href === 'http://ec2-13-56-249-168.us-west-1.compute.amazonaws.com:60001/') {
+      return 'http://ec2-13-56-249-168.us-west-1.compute.amazonaws.com:5000'
+    }
     return  'http://localhost:5000'
   },
   mocks: {
